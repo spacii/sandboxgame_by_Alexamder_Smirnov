@@ -158,6 +158,11 @@ public class ClientSocket implements Runnable {
                             }
 */
                             break;
+
+                        case "BlockDestroyed" :
+                            int id_des = scanner.nextInt();
+                            gameManager.gameWorld.destroyBlock(id_des);
+                            break;
                         default:
                             break;
                     }

@@ -13,10 +13,17 @@ public class GameWorld{
     private int worldW = 30*BS, worldH = 15*BS; // Размер мира в пикселях
     private ArrayList<Block> worldsBlocks; // Блоки
     private ArrayList<Boolean> worldCollision;
+    private ClientSocket clientSocket;
 
     public GameWorld(){
         worldsBlocks = new ArrayList<>();
         worldCollision = new ArrayList<>();
+    }
+
+    public GameWorld(ClientSocket clientSocket){
+        worldsBlocks = new ArrayList<>();
+        worldCollision = new ArrayList<>();
+        this.clientSocket = clientSocket;
     }
 
     public void generateWorld(){
@@ -73,8 +80,29 @@ public class GameWorld{
 
     }
 
-    public void destroyBlock(int x, int y){
+    public void destroyBlock(int id){
+        worldsBlocks.set(id, new EmptyBlock((int)worldsBlocks.get(id).posX, (int)worldsBlocks.get(id).posY, BS, BS));
+        worldCollision.set(id, true);
+    }
 
+    public void destroyBlock(int x, int y){
+        for(int i = 0; i < worldsBlocks.size(); i++){
+            if((x >= worldsBlocks.get(i).posX && x <= worldsBlocks.get(i).posX+16) &&
+                    (y >= worldsBlocks.get(i).posY && y <= worldsBlocks.get(i).posY+16)){
+                worldsBlocks.set(i, new EmptyBlock((int)worldsBlocks.get(i).posX, (int)worldsBlocks.get(i).posY, BS, BS));
+                worldCollision.set(i, true);
+            }
+        }
+    }
+
+    int getDestroyedId(int x, int y){
+        for(int i = 0; i < worldsBlocks.size(); i++){
+            if((x >= worldsBlocks.get(i).posX && x <= worldsBlocks.get(i).posX+16) &&
+                    (y >= worldsBlocks.get(i).posY && y <= worldsBlocks.get(i).posY+16)){
+                return i;
+            }
+        }
+        return 0;
     }
 
     public void update(GameLoop gameLoop, float dt) {

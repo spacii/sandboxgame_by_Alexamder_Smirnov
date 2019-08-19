@@ -35,13 +35,15 @@ public class Player extends Character {
     @Override
     public void update(GameLoop gameLoop, GameManager gameManager, float dt) {
 
-
         if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
             gameManager.gameWorld.buildBlock((int)(gameLoop.getInput().getMouseX() + gameManager.camera.getOffX()), (int)(gameLoop.getInput().getMouseY() + gameManager.camera.getOffY()));
         }
 
         if(gameLoop.getInput().isButton(MouseEvent.BUTTON3)){
             gameManager.gameWorld.destroyBlock((int)(gameLoop.getInput().getMouseX() + gameManager.camera.getOffX()), (int)(gameLoop.getInput().getMouseY() + gameManager.camera.getOffY()));
+            if(gameManager.getGameStatus() == 3){
+                gameManager.clientSocket.getPrintWriter().println("BlockDestroyed::" + gameManager.gameWorld.getDestroyedId((int)(gameLoop.getInput().getMouseX() + gameManager.camera.getOffX()), (int)(gameLoop.getInput().getMouseY() + gameManager.camera.getOffY())) + "::");
+            }
         }
 
         if(gameLoop.getInput().isKey(KeyEvent.VK_ESCAPE)){
@@ -100,6 +102,7 @@ public class Player extends Character {
 
         if(gameLoop.getInput().isButton(MouseEvent.BUTTON3)){
             gameManager.gameWorld.destroyBlock((int)(gameLoop.getInput().getMouseX() + gameManager.camera.getOffX()), (int)(gameLoop.getInput().getMouseY() + gameManager.camera.getOffY()));
+            System.out.println("Destroed");
         }
 
         if(gameLoop.getInput().isKey(KeyEvent.VK_ESCAPE)){
