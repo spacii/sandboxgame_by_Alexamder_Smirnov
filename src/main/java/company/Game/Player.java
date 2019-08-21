@@ -37,6 +37,9 @@ public class Player extends Character {
 
         if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
             gameManager.gameWorld.buildBlock((int)(gameLoop.getInput().getMouseX() + gameManager.camera.getOffX()), (int)(gameLoop.getInput().getMouseY() + gameManager.camera.getOffY()));
+            if(gameManager.getGameStatus() == 3){
+                gameManager.clientSocket.getPrintWriter().println("BlockPlaced::" + gameManager.gameWorld.getDestroyedId((int)(gameLoop.getInput().getMouseX() + gameManager.camera.getOffX()), (int)(gameLoop.getInput().getMouseY() + gameManager.camera.getOffY())) + "::");
+            }
         }
 
         if(gameLoop.getInput().isButton(MouseEvent.BUTTON3)){

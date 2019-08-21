@@ -55,6 +55,10 @@ public class GameWorld{
                     worldsBlocks.add(new CobbleStoneBlock(x.get(i).intValue(), y.get(i).intValue(), BS, BS));
                     worldCollision.add(false);
                     break;
+                case 3 :
+                    worldsBlocks.add(new BrickBlock(x.get(i).intValue(), y.get(i).intValue(), BS, BS));
+                    worldCollision.add(false);
+                    break;
                 default:
                     break;
             }
@@ -76,8 +80,19 @@ public class GameWorld{
         return worldCollision.get(temp_index);
     }
 
-    public void buildBlock(int x, int y){
+    public void buildBlock(int id){
+        worldsBlocks.set(id, new BrickBlock((int)worldsBlocks.get(id).posX, (int)worldsBlocks.get(id).posY, BS, BS));
+        worldCollision.set(id, false);
+    }
 
+    public void buildBlock(int x, int y){
+        for(int i = 0; i < worldsBlocks.size(); i++){
+            if((x >= worldsBlocks.get(i).posX && x <= worldsBlocks.get(i).posX+16) &&
+                    (y >= worldsBlocks.get(i).posY && y <= worldsBlocks.get(i).posY+16)){
+                worldsBlocks.set(i, new BrickBlock((int)worldsBlocks.get(i).posX, (int)worldsBlocks.get(i).posY, BS, BS));
+                worldCollision.set(i, false);
+            }
+        }
     }
 
     public void destroyBlock(int id){

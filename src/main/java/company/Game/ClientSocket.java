@@ -163,6 +163,10 @@ public class ClientSocket implements Runnable {
                             int id_des = scanner.nextInt();
                             gameManager.gameWorld.destroyBlock(id_des);
                             break;
+                        case "BlockPlaced" :
+                            int id_placed = scanner.nextInt();
+                            gameManager.gameWorld.buildBlock(id_placed);
+                            break;
                         default:
                             break;
                     }

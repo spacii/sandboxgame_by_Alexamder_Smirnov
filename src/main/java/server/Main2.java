@@ -204,6 +204,14 @@ class ServerConnection implements Runnable{
         }
     }
 
+    void placeBlock(int id){
+        for(int i = 0; i < connectionsList.size(); i++){
+            if(connectionsList.get(i).getConnectionId() != connectionId){
+                connectionsList.get(i).getPrintWriter().println("BlockPlaced::" + id + "::");
+            }
+        }
+    }
+
     @Override
     public void run() {
         while(scanner.hasNextLine()){
@@ -226,9 +234,14 @@ class ServerConnection implements Runnable{
                         spawnOldInNew(connectionsList.get((connectionsList.size()-1)).getConnectionId());
                         break;
                     case "BlockDestroyed" :
-                        int id = scanner.nextInt();
-                        destroyBlock(id);
-                        gameWorldServer.destroyBlock(id);
+                        int id_des = scanner.nextInt();
+                        destroyBlock(id_des);
+                        gameWorldServer.destroyBlock(id_des);
+                        break;
+                    case "BlockPlaced" :
+                        int id_placed = scanner.nextInt();
+                        placeBlock(id_placed);
+                        gameWorldServer.buildBlock(id_placed);
                         break;
                     default:
                         break;
