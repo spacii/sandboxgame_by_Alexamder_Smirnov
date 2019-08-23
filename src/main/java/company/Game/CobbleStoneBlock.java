@@ -6,7 +6,7 @@ import company.engine.gfx.Image;
 
 public class CobbleStoneBlock extends Block {
 
-    static Image image = new Image("C:\\Users\\Саша\\IdeaProjects\\sandboxgame\\src\\main\\java\\CobbleStone16x16.jpg");
+    static Image image = new Image("/CobbleStone16x16.jpg");
 
     public CobbleStoneBlock(){
 

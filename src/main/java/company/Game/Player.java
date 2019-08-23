@@ -20,7 +20,7 @@ public class Player extends Character {
     float temp = 0;
 
     public Player(int posX, int posY, int width, int height, int health) {
-        super(posX, posY, width, height, health, new ImageTile("C:\\Users\\Саша\\IdeaProjects\\sandboxgame\\src\\main\\java\\testMe.png",16,16));
+        super(posX, posY, width, height, health, new ImageTile("/testMe.png",16,16));
         this.tileX = posX;
         this.tileY = posY;
         this.offX = 0;

@@ -17,8 +17,8 @@ public class Image implements Serializable {
     public Image(String path){
         BufferedImage bufferedImage = null;
         try {
-            //bufferedImage = ImageIO.read(Image.class.getResourceAsStream(path));
-            bufferedImage = ImageIO.read(new FileInputStream(path));
+            //bufferedImage = ImageIO.read(new FileInputStream(path));
+            bufferedImage = ImageIO.read(Image.class.getResource(path));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -6,7 +6,7 @@ import company.engine.gfx.Image;
 
 public class EmptyBlock extends Block {
 
-    static Image image = new Image("C:\\Users\\Саша\\IdeaProjects\\sandboxgame\\src\\main\\java\\EmptyBlock16x16.jpg");
+    static Image image = new Image("/EmptyBlock16x16.jpg");
 
     public EmptyBlock(){
 

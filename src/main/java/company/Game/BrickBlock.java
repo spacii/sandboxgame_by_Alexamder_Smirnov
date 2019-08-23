@@ -7,7 +7,7 @@ import company.engine.gfx.Image;
 public class BrickBlock extends Block {
 
     public BrickBlock(int posX, int posY, int width, int height) {
-        super(posX, posY, width, height, new Image("C:\\Users\\Саша\\IdeaProjects\\sandboxgame\\src\\main\\java\\Brick16x16.jpg"), 3);
+        super(posX, posY, width, height, new Image("/Brick16x16.jpg"), 3);
     }
 
     @Override

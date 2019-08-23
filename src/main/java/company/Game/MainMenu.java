@@ -5,12 +5,17 @@ import company.engine.Renderer;
 import company.engine.gfx.Image;
 
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainMenu {
-    private Image image = new Image("C:\\Users\\Саша\\IdeaProjects\\sandboxgame\\src\\main\\resources\\MainM.jpg");
+
+    private Image image = new Image("/MainM.jpg");
+    //private Image image = new Image((MainMenu.class.getResourceAsStream("/MainM.jpg").toString()));
     private GameManager gameManager;
     private boolean load1 = true;
 
