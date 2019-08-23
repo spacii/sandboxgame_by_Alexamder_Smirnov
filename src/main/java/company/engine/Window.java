@@ -2,6 +2,9 @@ package company.engine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -13,7 +16,7 @@ public class Window {
     private Canvas canvas;
     private Graphics g;
 
-    public Window(GameLoop gameLoop) {
+    public Window(final GameLoop gameLoop) {
         bufferedImage = new BufferedImage(gameLoop.getWidth(), gameLoop.getHeight(), BufferedImage.TYPE_INT_RGB);
         dimension = new Dimension((int)(gameLoop.getWidth() * gameLoop.getScale()), (int)(gameLoop.getHeight()*gameLoop.getScale()));
         canvas = new Canvas();
@@ -29,6 +32,17 @@ public class Window {
         jFrame.setLocationRelativeTo(null);
         jFrame.setResizable(false);
         jFrame.setVisible(true);
+
+        jFrame.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                if(gameLoop.getAbstractGame().getGameStatus() == 3){
+                    gameLoop.getAbstractGame().getClientSocket().getPrintWriter().println("Disconnected::");
+                }
+            }
+        });
 
         canvas.createBufferStrategy(2);
         bs = canvas.getBufferStrategy();

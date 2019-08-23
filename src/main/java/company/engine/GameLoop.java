@@ -142,6 +142,10 @@ public class GameLoop implements Runnable{
         return input;
     }
 
+    public GameManager getAbstractGame(){
+        return abstractGame;
+    }
+
     public Renderer getRenderer() {
         return renderer;
     }

@@ -59,6 +59,7 @@ public class Main2 {
         }
 
     }
+
 }
 
 class ServerConnection implements Runnable{
@@ -212,6 +213,21 @@ class ServerConnection implements Runnable{
         }
     }
 
+    void deletePlayerFromOther(int disconnectedPlayerId){
+        for(int i = 0; i < connectionsList.size(); i++){
+            if(connectionsList.get(i).getConnectionId() != connectionId){
+                connectionsList.get(i).getPrintWriter().println("DisconnectedPlayer::" + disconnectedPlayerId + "::");
+            }
+        }
+
+        for(int i = 0; i < connectionsList.size(); i++){
+            if(connectionsList.get(i).getConnectionId() == connectionId){
+                connectionsList.remove(i);
+                this.thread.stop();
+            }
+        }
+    }
+
     @Override
     public void run() {
         while(scanner.hasNextLine()){
@@ -242,6 +258,9 @@ class ServerConnection implements Runnable{
                         int id_placed = scanner.nextInt();
                         placeBlock(id_placed);
                         gameWorldServer.buildBlock(id_placed);
+                        break;
+                    case "Disconnected" :
+                        deletePlayerFromOther(connectionId);
                         break;
                     default:
                         break;

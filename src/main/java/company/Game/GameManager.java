@@ -88,6 +88,14 @@ public class GameManager extends AbstractGame {
         players.add(new OtherPlayer(XXX,YYY,16,16, 100, id));
     }
 
+    void deletePlayer(int disconnectedPlayerId){
+        for(int i = 0; i < players.size(); i++){
+            if(players.get(i).getID() == disconnectedPlayerId){
+                players.remove(i);
+            }
+        }
+    }
+
     @Override
     public void update(GameLoop gameLoop, float dt) {
         switch (gameStatus){
@@ -164,6 +172,10 @@ public class GameManager extends AbstractGame {
 
     public void setGameWorld(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
+    }
+
+    public ClientSocket getClientSocket(){
+        return clientSocket;
     }
 
     public static void main(String[] args) {

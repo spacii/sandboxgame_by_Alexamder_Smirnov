@@ -167,6 +167,10 @@ public class ClientSocket implements Runnable {
                             int id_placed = scanner.nextInt();
                             gameManager.gameWorld.buildBlock(id_placed);
                             break;
+                        case "DisconnectedPlayer" :
+                            int disconnectedPlayerId = scanner.nextInt();
+                            gameManager.deletePlayer(disconnectedPlayerId);
+                            break;
                         default:
                             break;
                     }

@@ -10,7 +10,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 public class MainMenu {
-    private Image image = new Image("C:\\Users\\Саша\\IdeaProjects\\sandboxgame\\src\\main\\java\\MainMServer.jpg");
+    private Image image = new Image("C:\\Users\\Саша\\IdeaProjects\\sandboxgame\\src\\main\\resources\\MainM.jpg");
     private GameManager gameManager;
     private boolean load1 = true;
 

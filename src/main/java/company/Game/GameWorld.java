@@ -10,7 +10,7 @@ import java.util.Map;
 public class GameWorld{
 
     private int BS = 16; // Количество пикселей на один блок
-    private int worldW = 30*BS, worldH = 15*BS; // Размер мира в пикселях
+    private int worldW = 100*BS, worldH = 15*BS; // Размер мира в пикселях
     private ArrayList<Block> worldsBlocks; // Блоки
     private ArrayList<Boolean> worldCollision;
     private ClientSocket clientSocket;

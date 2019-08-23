@@ -2,7 +2,7 @@ package company.engine;
 
 import java.awt.event.*;
 
-public class Input implements KeyListener, MouseListener, MouseWheelListener, MouseMotionListener {
+public class Input implements KeyListener, MouseListener, MouseWheelListener, MouseMotionListener, WindowListener {
 
     private GameLoop gameLoop;
 
@@ -24,7 +24,6 @@ public class Input implements KeyListener, MouseListener, MouseWheelListener, Mo
         gameLoop.getWindow().getCanvas().addMouseListener(this);
         gameLoop.getWindow().getCanvas().addMouseWheelListener(this);
         gameLoop.getWindow().getCanvas().addMouseMotionListener(this);
-
     }
 
     public void update(){
@@ -128,5 +127,41 @@ public class Input implements KeyListener, MouseListener, MouseWheelListener, Mo
 
     public int getScroll() {
         return scroll;
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        gameLoop.getAbstractGame().getClientSocket().getPrintWriter().println("Disconnected::");
+        System.out.println("DISC");
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }
