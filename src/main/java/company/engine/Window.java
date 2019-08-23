@@ -40,6 +40,7 @@ public class Window {
             {
                 if(gameLoop.getAbstractGame().getGameStatus() == 3){
                     gameLoop.getAbstractGame().getClientSocket().getPrintWriter().println("Disconnected::");
+                    System.out.println("Disconnected");
                 }
             }
         });
