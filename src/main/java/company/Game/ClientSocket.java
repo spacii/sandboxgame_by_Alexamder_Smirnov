@@ -19,9 +19,15 @@ public class ClientSocket implements Runnable {
     private static PrintWriter printWriter;
     private static int ClientID;
     private GameManager gameManager;
-    ClientSocket(GameManager gameManager){
+
+    private String ip;
+    private int port;
+
+    ClientSocket(GameManager gameManager, String ip, int port){
         thread = new Thread(this);
         this.gameManager = gameManager;
+        this.ip = ip;
+        this.port = port;
     }
 
     public Thread getThread() {
@@ -45,10 +51,12 @@ public class ClientSocket implements Runnable {
     //@Override
     public void run() {
         try{
+            socket = new Socket();
+            socket.connect(new InetSocketAddress(ip, port), 2000);
             //socket = new Socket();
             //socket.connect(new InetSocketAddress("25.41.250.41",8189), 2000);
-            socket = new Socket();
-            socket.connect(new InetSocketAddress(InetAddress.getLocalHost(), 8189), 2000);
+            //socket = new Socket();
+            //socket.connect(new InetSocketAddress(InetAddress.getLocalHost(), 8189), 2000);
 
             scanner = new Scanner(socket.getInputStream());
             scanner.useDelimiter("::");

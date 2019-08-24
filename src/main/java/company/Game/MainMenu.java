@@ -103,7 +103,7 @@ public class MainMenu {
     }
 
     public void connectToServer(){
-        gameManager.connectToServer();
+        //gameManager.connectToServer();
     }
 
     public void loadGame(){

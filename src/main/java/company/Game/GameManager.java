@@ -40,11 +40,11 @@ public class GameManager extends AbstractGame {
         gameStatus = 1;
     }
 
-    public void connectToServer(){
-        clientSocket = new ClientSocket(this);
+    public void connectToServer(String ip, int port){
+        clientSocket = new ClientSocket(this, ip, port);
         clientSocket.getThread().start();
         try {
-            Thread.sleep(100);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
