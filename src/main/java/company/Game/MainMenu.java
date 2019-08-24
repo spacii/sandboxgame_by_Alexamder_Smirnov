@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class MainMenu {
 
-    private Image image = new Image("/MainM.jpg");
+    private Image image = new Image("/MainMenu.jpg");
     //private Image image = new Image((MainMenu.class.getResourceAsStream("/MainM.jpg").toString()));
     private GameManager gameManager;
     private boolean load1 = true;
@@ -24,7 +24,48 @@ public class MainMenu {
     }
 
     public void update(GameLoop gameLoop){
-        if((gameLoop.getInput().getMouseX() >= 224 && gameLoop.getInput().getMouseX() <= 414)
+
+        if((gameLoop.getInput().getMouseX() >= 215 && gameLoop.getInput().getMouseX() <= 423)
+                && (gameLoop.getInput().getMouseY() >= 75 && gameLoop.getInput().getMouseY() <= 120)){
+            if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
+                startNewGame(gameManager);
+            }
+        }
+
+        if((gameLoop.getInput().getMouseX() >= 215 && gameLoop.getInput().getMouseX() <= 423)
+                && (gameLoop.getInput().getMouseY() >= 150 && gameLoop.getInput().getMouseY() <= 195)){
+            if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
+                //connectToServer();
+                openServerBrowser();
+            }
+        }
+
+
+        if((gameLoop.getInput().getMouseX() >= 10 && gameLoop.getInput().getMouseX() <= 15)
+                && (gameLoop.getInput().getMouseY() >= 10 && gameLoop.getInput().getMouseY() <= 15)){
+            if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
+                loadGame();
+            }
+        }
+ /*
+
+        if((gameLoop.getInput().getMouseX() >= 427 && gameLoop.getInput().getMouseX() <= 616)
+                && (gameLoop.getInput().getMouseY() >= 62 && gameLoop.getInput().getMouseY() <= 127)){
+            if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
+                connectToServer();
+            }
+        }
+*/
+        if((gameLoop.getInput().getMouseX() >= 215 && gameLoop.getInput().getMouseX() <= 423)
+                && (gameLoop.getInput().getMouseY() >= 225 && gameLoop.getInput().getMouseY() <= 270)){
+            if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
+                exitGame();
+            }
+        }
+
+
+        /*
+         if((gameLoop.getInput().getMouseX() >= 224 && gameLoop.getInput().getMouseX() <= 414)
         && (gameLoop.getInput().getMouseY() >= 62 && gameLoop.getInput().getMouseY() <= 127)){
             if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
                 startNewGame(gameManager);
@@ -37,21 +78,20 @@ public class MainMenu {
                 loadGame();
             }
         }
-
-
         if((gameLoop.getInput().getMouseX() >= 427 && gameLoop.getInput().getMouseX() <= 616)
                 && (gameLoop.getInput().getMouseY() >= 62 && gameLoop.getInput().getMouseY() <= 127)){
             if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
                 connectToServer();
             }
         }
-
         if((gameLoop.getInput().getMouseX() >= 224 && gameLoop.getInput().getMouseX() <= 414)
                 && (gameLoop.getInput().getMouseY() >= 216 && gameLoop.getInput().getMouseY() <= 281)){
             if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
                 exitGame();
             }
         }
+         */
+
     }
 
     public void render(Renderer renderer){
@@ -101,7 +141,11 @@ public class MainMenu {
         }
     }
 
-    public void exitGame(){
+    private void openServerBrowser(){
+        gameManager.setGameStatus(4);
+    }
+
+    private void exitGame(){
         System.exit(1);
     }
 }

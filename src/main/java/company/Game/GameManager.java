@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class GameManager extends AbstractGame {
 
     MainMenu mainMenu;
+    ServerBrowser serverBrowser;
+    ServerAdding serverAdding;
     EscapeMenu escapeMenu;
     Player player;
     GameWorld gameWorld;
@@ -20,7 +22,9 @@ public class GameManager extends AbstractGame {
 
     public GameManager(){
             mainMenu = new MainMenu(this);
-            gameStatus = 0; // 0 - MainMenu, 1 - NewGame running, 2 - game pause, 3 - multiplayer
+            serverBrowser = new ServerBrowser(this);
+            serverAdding = new ServerAdding(this);
+            gameStatus = 0; // 0 - MainMenu, 1 - NewGame running, 2 - game pause, 3 - multiplayer, 4 - ServerBrowser, 5 - AddingServer
     }
 
     public Player getPlayer(){
@@ -117,6 +121,13 @@ public class GameManager extends AbstractGame {
                 for(int i = 0; i < players.size(); i++){
                     players.get(i).update(gameLoop,this, dt);
                 }
+                break; //
+            case 4 :
+                serverBrowser.update(gameLoop);
+                break;
+            case 5 :
+                serverAdding.update(gameLoop);
+                break;
             default:
                 break;
         }
@@ -148,6 +159,13 @@ public class GameManager extends AbstractGame {
                 for(int i = 0; i < players.size(); i++){
                     players.get(i).render(gameLoop, renderer);
                 }
+                break;
+            case 4 :
+                serverBrowser.render(renderer);
+                break;
+            case 5 :
+                serverAdding.render(renderer);
+                break;
             default:
                 break;
 
@@ -168,6 +186,10 @@ public class GameManager extends AbstractGame {
 
     public void setGameStatus(int gameStatus) {
         this.gameStatus = gameStatus;
+    }
+
+    public ServerBrowser getServerBrowser(){
+        return serverBrowser;
     }
 
     public void setGameWorld(GameWorld gameWorld) {

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -44,10 +45,10 @@ public class ClientSocket implements Runnable {
     //@Override
     public void run() {
         try{
-            socket = new Socket();
-            socket.connect(new InetSocketAddress("25.41.250.41",8189), 2000);
             //socket = new Socket();
-            //socket.connect(new InetSocketAddress(InetAddress.getLocalHost(), 8189), 2000);
+            //socket.connect(new InetSocketAddress("25.41.250.41",8189), 2000);
+            socket = new Socket();
+            socket.connect(new InetSocketAddress(InetAddress.getLocalHost(), 8189), 2000);
 
             scanner = new Scanner(socket.getInputStream());
             scanner.useDelimiter("::");

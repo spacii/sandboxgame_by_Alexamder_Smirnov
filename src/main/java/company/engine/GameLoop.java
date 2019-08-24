@@ -10,7 +10,7 @@ public class GameLoop implements Runnable{
     private final double MAX_FPS = 1.0/60.0;
 
     private int width = 640, height = 360; //16:9
-    private float scale = 2f;
+    private float scale = 3f;
     private String title = "game";
 
     private Window window;
