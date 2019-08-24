@@ -12,11 +12,15 @@ public class ServerInBrowser {
     private String ip;
     private Image image = new Image("/ServerInBrowser.png");
 
+    //private ClientEcho clientEcho;
+
     ServerInBrowser(int x, int y, String ip, int port){
         this.x = x;
         this.y = y;
         this.port = port;
         this.ip = ip;
+
+        //clientEcho = new ClientEcho();
     }
 
     public void update(GameLoop gameLoop){
@@ -27,9 +31,12 @@ public class ServerInBrowser {
         }
     }
 
-    public void render(Renderer renderer){
+    public void render(Renderer renderer, int count){
         renderer.drawImage(image, x,y);
         renderer.drawText(ip + ":" + port, x+10, y+10, 0xff00ffff);
+
+        String countStr = "PLAYERS: " + count + "/INF.";
+        renderer.drawText(countStr,x+10, y+20, 0xff00ffff );
     }
 
     int getX2(){

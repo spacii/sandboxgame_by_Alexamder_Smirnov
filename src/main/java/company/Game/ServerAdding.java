@@ -49,7 +49,6 @@ public class ServerAdding {
                 if(gameLoop.getInput().isKey(KeyEvent.VK_8)){ port += 8; Thread.sleep(sleepTime);}
                 if(gameLoop.getInput().isKey(KeyEvent.VK_9)){ port += 9; Thread.sleep(sleepTime);}
                 if(gameLoop.getInput().isKey(KeyEvent.VK_0)){ port += 0; Thread.sleep(sleepTime);}
-                if(gameLoop.getInput().isKey(KeyEvent.VK_PERIOD)){ port += "."; Thread.sleep(sleepTime);}
                 if(gameLoop.getInput().isKey(KeyEvent.VK_BACK_SPACE)){ port = port.substring(0, port.length()-1); Thread.sleep(sleepTime);}
             } catch (Exception e){}
         }
@@ -113,6 +112,12 @@ public class ServerAdding {
     }
 
     private void back(){
+        ipSelected = false;
+        portSelected = false;
+
+        ip = "";
+        port = "";
+
         gameManager.setGameStatus(4);
     }
 }

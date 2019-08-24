@@ -3,6 +3,7 @@ package company.Game;
 import company.engine.GameLoop;
 import company.engine.Renderer;
 import company.engine.gfx.Image;
+import server.ServerEcho;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -11,13 +12,16 @@ public class ServerBrowser {
 
     private int x = 65, currentY = 50;
     private ArrayList<ServerInBrowser> servers;
+    private ArrayList<ClientEcho> serversUDP;
     private Image image = new Image("/ServerBrowser.jpg");
     private GameManager gameManager;
     private int selectedServerIndex;
 
+
     ServerBrowser(GameManager gameManager){
         this.gameManager = gameManager;
         servers = new ArrayList<>();
+        serversUDP = new ArrayList<>();
     }
 
     public void update(GameLoop gameLoop){
@@ -57,8 +61,8 @@ public class ServerBrowser {
         renderer.drawImage(image, 0,0);
 
         for(int i = 0; i < servers.size(); i++){
-            servers.get(i).render(renderer);
-            servers.get(i).render(renderer);
+            serversUDP.get(i).getPlayersCount();
+            servers.get(i).render(renderer, serversUDP.get(i).getCurrentCount());
         }
     }
 
@@ -74,6 +78,7 @@ public class ServerBrowser {
     public void addServerInList(String ip, int port){
         servers.add(new ServerInBrowser(x,currentY, ip, port));
         currentY += 70;
+        serversUDP.add(new ClientEcho(ip, port));
     }
 
     private void back(){

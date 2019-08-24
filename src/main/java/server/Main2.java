@@ -18,27 +18,10 @@ public class Main2 {
     static private ArrayList<ServerConnection> connectionsList = new ArrayList<>();
     static private GameWorld gameWorldServer;
 
-
-    static void spawnNewInAll(int id){
-        for(int i = 0; i < connectionsList.size(); i++){
-            if(connectionsList.get(i).getConnectionId() != id){
-                connectionsList.get(i).getPrintWriter().println("newConnected::" + id + "::");
-            }
-        }
-    }
-
-    static void spawnOldInNew(int id){
-        for(int i = 0; i < connectionsList.size(); i++){
-            if(connectionsList.get(i).getConnectionId() != id){
-                connectionsList.get(connectionsList.size()-1).getPrintWriter().println("oldFag::" + connectionsList.get(i).getConnectionId() + "::"
-                + connectionsList.get(i).getPosX() + "::" + connectionsList.get(i).getPosY() + "::");
-            }
-        }
-    }
-
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(8189);
+            ServerEcho serverEcho = new ServerEcho(connectionsList);
             System.out.println("Server started");
             gameWorldServer = new GameWorld();
             gameWorldServer.generateWorld();
@@ -48,9 +31,6 @@ public class Main2 {
                 ServerConnection serverConnection = new ServerConnection(socket, connectionsList, gameWorldServer);
                 connectionsList.add(serverConnection);
                 connectionsList.get((connectionsList.size()-1)).getThread().start();
-
-                //spawnNewInAll(connectionsList.get((connectionsList.size()-1)).getConnectionId());
-                //spawnOldInNew(connectionsList.get((connectionsList.size()-1)).getConnectionId());
 
                 System.out.println("Player connected");
             }
@@ -261,6 +241,7 @@ class ServerConnection implements Runnable{
                         break;
                     case "Disconnected" :
                         deletePlayerFromOther(connectionId);
+                        System.out.println("Player disconnected");
                         break;
                     default:
                         break;
