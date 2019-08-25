@@ -50,7 +50,16 @@ public class Player extends Character {
         }
 
         if(gameLoop.getInput().isKey(KeyEvent.VK_ESCAPE)){
-            gameManager.setGameStatus(2);
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(gameManager.getGameStatus() == 3){
+
+            }else{
+                gameManager.setGameStatus(2);
+            }
         }
 
         if(gameLoop.getInput().isKey(KeyEvent.VK_G)){

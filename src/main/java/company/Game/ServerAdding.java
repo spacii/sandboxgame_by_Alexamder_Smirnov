@@ -9,9 +9,10 @@ import java.awt.event.MouseEvent;
 
 public class ServerAdding {
     private Image image = new Image("/ServerAdding.jpg");
+    private Image selectedLine = new Image("/selectedServerLine.png");
     private GameManager gameManager;
     private String ip = "", port = "";
-    private int sleepTime = 150;
+    private int sleepTime = 100;
     private boolean ipSelected = false, portSelected = false;
 
     ServerAdding(GameManager gameManager){
@@ -53,9 +54,6 @@ public class ServerAdding {
             } catch (Exception e){}
         }
 
-
-
-        // Активация ввода IP
         if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
             if((gameLoop.getInput().getMouseX() >= 167 && gameLoop.getInput().getMouseX() <= 473)
                     && (gameLoop.getInput().getMouseY() >= 128 && gameLoop.getInput().getMouseY() <= 148)){
@@ -66,10 +64,7 @@ public class ServerAdding {
                     ipSelected = false;
                 }
             }
-        }
-
-        // Активация ввода PORT
-        if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
+            //------
             if((gameLoop.getInput().getMouseX() >= 167 && gameLoop.getInput().getMouseX() <= 473)
                     && (gameLoop.getInput().getMouseY() >= 153 && gameLoop.getInput().getMouseY() <= 172)){
                 portSelected = true;
@@ -79,21 +74,20 @@ public class ServerAdding {
                     portSelected = false;
                 }
             }
-        }
-
-        // Нажатие на "Добавить сервер"
-        if((gameLoop.getInput().getMouseX() >= 108 && gameLoop.getInput().getMouseX() <= 319)
-                && (gameLoop.getInput().getMouseY() >= 275 && gameLoop.getInput().getMouseY() <= 313)){
-            if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
-                addServer(ip, Integer.parseInt(port));
-                gameManager.getServerBrowser().refreshServers();
+            //------
+            if((gameLoop.getInput().getMouseX() >= 108 && gameLoop.getInput().getMouseX() <= 319)
+                    && (gameLoop.getInput().getMouseY() >= 275 && gameLoop.getInput().getMouseY() <= 313)){
+                try {
+                    addServer(ip, Integer.parseInt(port));
+                    gameManager.getServerBrowser().refreshServers();
+                } catch (Exception e){
+                    addServer("0000000", 0);
+                    gameManager.getServerBrowser().refreshServers();
+                }
             }
-        }
-
-        // Нажатие на "Назад"
-        if((gameLoop.getInput().getMouseX() >= 330 && gameLoop.getInput().getMouseX() <= 540)
-                && (gameLoop.getInput().getMouseY() >= 275 && gameLoop.getInput().getMouseY() <= 313)){
-            if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
+            //------
+            if((gameLoop.getInput().getMouseX() >= 330 && gameLoop.getInput().getMouseX() <= 540)
+                    && (gameLoop.getInput().getMouseY() >= 275 && gameLoop.getInput().getMouseY() <= 313)){
                 back();
             }
         }
@@ -103,11 +97,15 @@ public class ServerAdding {
         renderer.drawImage(image, 0,0);
         renderer.drawText(ip,205, 135, 0xff00ffff);
         renderer.drawText(port,225, 161, 0xff00ffff);
+        if(ipSelected){
+            renderer.drawImage(selectedLine,167,147);
+        }
+        if(portSelected){
+            renderer.drawImage(selectedLine,167,172);
+        }
     }
 
     private void addServer(String ip, int port){
-        //gameManager.getServerBrowser().getServers().add(new ServerInBrowser(66,50));
-        //gameManager.getServerBrowser().addServerInList("25.41.250.41", 8189);
         gameManager.getServerBrowser().addServerInList(ip, port);
         back();
     }

@@ -23,13 +23,22 @@ public class ServerEcho implements Runnable {
     private Scanner scanner;
     private ArrayList<ServerConnection> connections;
     private String serverName;
+    private int serverPort;
 
-    public ServerEcho(ArrayList<ServerConnection> connections, String serverName) {
+    private String usersIp;
+    private int usersPort;
+
+    public ServerEcho(ArrayList<ServerConnection> connections, String serverName, int serverPort) {
         try{
             this.connections = connections;
             this.serverName = serverName;
+            this.serverPort = serverPort;
+
+            //usersIp = "25.41.250.41";
+            usersPort = 8188;
+
             thread = new Thread(this);
-            datagramSocket = new DatagramSocket(8189);
+            datagramSocket = new DatagramSocket(serverPort);
             byteArrayOutputStream = new ByteArrayOutputStream();
             objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
             thread.start();
@@ -38,7 +47,7 @@ public class ServerEcho implements Runnable {
         }
     }
 
-    public void sendServerStatus(){
+    public void sendServerStatus(String usersIp,int usersPort){
         try{
             String object = "isAlive::";
 
@@ -48,14 +57,17 @@ public class ServerEcho implements Runnable {
             objectOutputStream.flush();
 
             byte[] Buf = byteArrayOutputStream.toByteArray();
-            datagramPacket = new DatagramPacket(Buf, Buf.length, new InetSocketAddress("25.41.250.41",8188));
-            datagramSocket.send(datagramPacket); // Отправили объект.
+            datagramPacket = new DatagramPacket(Buf, Buf.length, new InetSocketAddress(usersIp, usersPort)); //8188
+
+            System.out.println("Отвечаю сюда: " + usersIp + ":" + usersPort);
+
+            datagramSocket.send(datagramPacket);
         } catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void sendServeInfo(){
+    public void sendServeInfo(String usersIp, int usersPort){
         try{
             String object = "serverInfo::" + connections.size() + "::" + serverName + "::";
 
@@ -65,21 +77,9 @@ public class ServerEcho implements Runnable {
             objectOutputStream.flush();
 
             byte[] Buf = byteArrayOutputStream.toByteArray();
-            int length = Buf.length;
-            byte[] data = new byte[4];
-
-            for (int i = 0; i < 4; ++i) {
-                int shift = i << 3; // i * 8
-                data[3-i] = (byte)((length & (0xff << shift)) >>> shift);
-            }
-
-           // datagramPacket = new DatagramPacket(data, 4, InetAddress.getByName("localhost"), 8189);
-           // datagramPacket = new DatagramPacket(data, 4, new InetSocketAddress("25.41.250.41",8189));
-           // datagramSocket.send(datagramPacket); // Отправили размер.
-
-            //datagramPacket = new DatagramPacket(Buf, Buf.length, InetAddress.getByName("localhost"), 8188);
-            datagramPacket = new DatagramPacket(Buf, Buf.length, new InetSocketAddress("25.41.250.41",8188));
-            datagramSocket.send(datagramPacket); // Отправили объект.
+            datagramPacket = new DatagramPacket(Buf, Buf.length, new InetSocketAddress(usersIp, usersPort)); //8188
+            System.out.println("Отвечаю сюда: " + usersIp + ":" + usersPort);
+            datagramSocket.send(datagramPacket);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -89,17 +89,6 @@ public class ServerEcho implements Runnable {
     public void run() {
         while(true){
             try{
-                /*
-                byte[] data = new byte[4];
-                datagramPacket = new DatagramPacket(data, data.length);
-                datagramSocket.receive(datagramPacket);
-
-                int len = 0;
-                for (int i = 0; i < 4; ++i) {
-                    len |= (data[3-i] & 0xff) << (i << 3);
-                }
-*/
-                //byte[] buffer = new byte[len];
                 byte[] buffer = new byte[256];
                 datagramPacket = new DatagramPacket(buffer, buffer.length );
                 datagramSocket.receive(datagramPacket);
@@ -116,10 +105,14 @@ public class ServerEcho implements Runnable {
                     String command = scanner.next();
                     switch (command) {
                         case "giveServeInfo" :
-                            sendServeInfo();
+                            String ip1 = scanner.next();
+                            int port1 = scanner.nextInt();
+                            sendServeInfo(ip1, port1);
                             break;
                         case "aliveCheck" :
-                            sendServerStatus();
+                            String ip2 = scanner.next();
+                            int port2 = scanner.nextInt();
+                            sendServerStatus(ip2, port2);
                             break;
                         default:
                             break;

@@ -22,32 +22,33 @@ public class EscapeMenu {
 
     public void update(GameLoop gameLoop){
 
-        if(gameLoop.getInput().isKey(KeyEvent.VK_ESCAPE)){
-            gameManager.setGameStatus(1);
-        }
-
-        if((gameLoop.getInput().getMouseX() >= 224 && gameLoop.getInput().getMouseX() <= 414)
-                && (gameLoop.getInput().getMouseY() >= 62 && gameLoop.getInput().getMouseY() <= 127)){
-            if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
-                exitToMainMenu();
+        try{
+            if(gameLoop.getInput().isKey(KeyEvent.VK_ESCAPE)){
+                Thread.sleep(150);
+                gameManager.setGameStatus(1);
             }
-        }
 
-        if((gameLoop.getInput().getMouseX() >= 224 && gameLoop.getInput().getMouseX() <= 414)
-                && (gameLoop.getInput().getMouseY() >= 138 && gameLoop.getInput().getMouseY() <= 204)){
             if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
-                if(saveG1){
-                    saveGame();
-                    saveG1 = false;
+                if((gameLoop.getInput().getMouseX() >= 224 && gameLoop.getInput().getMouseX() <= 414)
+                        && (gameLoop.getInput().getMouseY() >= 62 && gameLoop.getInput().getMouseY() <= 127)){
+                    exitToMainMenu();
+                    Thread.sleep(150);
+                }
+                if((gameLoop.getInput().getMouseX() >= 224 && gameLoop.getInput().getMouseX() <= 414)
+                        && (gameLoop.getInput().getMouseY() >= 138 && gameLoop.getInput().getMouseY() <= 204)){
+                    if(saveG1){
+                        saveGame();
+                        saveG1 = false;
+                        Thread.sleep(150);
+                    }
+                }
+                if((gameLoop.getInput().getMouseX() >= 224 && gameLoop.getInput().getMouseX() <= 414)
+                        && (gameLoop.getInput().getMouseY() >= 216 && gameLoop.getInput().getMouseY() <= 281)){
+                    exitGame();
                 }
             }
-        }
-
-        if((gameLoop.getInput().getMouseX() >= 224 && gameLoop.getInput().getMouseX() <= 414)
-                && (gameLoop.getInput().getMouseY() >= 216 && gameLoop.getInput().getMouseY() <= 281)){
-            if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
-                exitGame();
-            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 

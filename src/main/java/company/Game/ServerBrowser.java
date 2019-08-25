@@ -99,8 +99,15 @@ public class ServerBrowser {
     }
 
     private void connectToSelectedServer(){
-        System.out.println(servers.get(selectedServerIndex).getIp() + ":" + servers.get(selectedServerIndex).getPort());
-        gameManager.connectToServer(servers.get(selectedServerIndex).getIp(), servers.get(selectedServerIndex).getPort());
+        if(servers.size() > 0){
+            try{
+                System.out.println(servers.get(selectedServerIndex).getIp() + ":" + servers.get(selectedServerIndex).getPort());
+                gameManager.connectToServer(servers.get(selectedServerIndex).getIp(), servers.get(selectedServerIndex).getPort());
+            } catch (Exception e){
+                refreshServers();
+                e.printStackTrace();
+            }
+        }
     }
 
     private void removeSelectedServer(){

@@ -3,11 +3,11 @@ package server;
 import com.google.gson.Gson;
 import company.Game.GameWorld;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,15 +16,63 @@ import java.util.Scanner;
 public class Main2 {
 
     static private String serveName;
-    static private ArrayList<ServerConnection> connectionsList = new ArrayList<>();
+    static private String serverIp;
+    static private int serverPort;
+    static InetAddress inetAddress;
+    static private int maxPlayers;
     static private GameWorld gameWorldServer;
+    static private ArrayList<ServerConnection> connectionsList = new ArrayList<>();
+
+
+    private static void readServerSettingsFromFile(){
+        //InputStream in = Main2.class.getResourceAsStream("/server_properties.txt");
+        File in = new File("C:\\Users\\Саша\\IdeaProjects\\sandboxgame\\src\\main\\resources\\server_properties.txt");
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(in);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        scanner.useDelimiter("=");
+
+        while (scanner.hasNextLine()){
+            while(scanner.hasNext()){
+                String parameter = scanner.next();
+                switch(parameter){
+                    case "server-name" :
+                        serveName = scanner.next();
+                        break;
+                    case "server-ip" :
+                        serverIp = scanner.next();
+                        try {
+                            inetAddress = InetAddress.getByName(serverIp);
+                        } catch (UnknownHostException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "server-port" :
+                        serverPort = scanner.nextInt();
+                        break;
+                    case "max-players" :
+                        maxPlayers = scanner.nextInt();
+                        break;
+                    default :
+                        break;
+                }
+            }
+            break;
+        }
+    }
 
     public static void main(String[] args) {
         try {
-            serveName = "SandBox's First Server";
-            ServerSocket serverSocket = new ServerSocket(8189);
-            ServerEcho serverEcho = new ServerEcho(connectionsList, serveName);
+            readServerSettingsFromFile();
+
+            //ServerSocket serverSocket = new ServerSocket(serverPort);
+            ServerSocket serverSocket = new ServerSocket(serverPort, 50, inetAddress);
+            ServerEcho serverEcho = new ServerEcho(connectionsList, serveName, serverPort);
             System.out.println("Server started");
+            System.out.println(serverIp + ":" + serverPort);
             gameWorldServer = new GameWorld();
             gameWorldServer.generateWorld();
 
@@ -242,8 +290,8 @@ class ServerConnection implements Runnable{
                         gameWorldServer.buildBlock(id_placed);
                         break;
                     case "Disconnected" :
-                        deletePlayerFromOther(connectionId);
                         System.out.println("Player disconnected");
+                        deletePlayerFromOther(connectionId);
                         break;
                     default:
                         break;

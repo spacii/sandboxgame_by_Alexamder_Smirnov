@@ -11,7 +11,7 @@ public class ServerInBrowser {
 
     private int x, y, port, sizeX = 272, sizeY = 50;
     private String ip = "", serverName = "", players = "";
-    private Image image = new Image("/ServerInBrowser.png");
+    private Image image = new Image("/serverInBrowser.png");
     private Image serverIcon = new Image("/defaultServerIcon.jpg");
     private Image selectedLine = new Image("/selectedServerLine.png");
     private boolean online = false;
@@ -24,11 +24,11 @@ public class ServerInBrowser {
     }
 
     public void update(GameLoop gameLoop){
-        if((gameLoop.getInput().getMouseX() >= 405 && gameLoop.getInput().getMouseX() <= 615)
-                && (gameLoop.getInput().getMouseY() >= 275 && gameLoop.getInput().getMouseY() <= 313)){
-            if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
-            }
-        }
+//        if((gameLoop.getInput().getMouseX() >= 405 && gameLoop.getInput().getMouseX() <= 615)
+//                && (gameLoop.getInput().getMouseY() >= 275 && gameLoop.getInput().getMouseY() <= 313)){
+//            if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
+//            }
+//        }
     }
 
     public void render(Renderer renderer, boolean isSelected){

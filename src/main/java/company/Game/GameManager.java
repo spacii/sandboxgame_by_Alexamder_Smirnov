@@ -18,13 +18,19 @@ public class GameManager extends AbstractGame {
     ClientSocket clientSocket;
     ArrayList<OtherPlayer> players;
 
+    NoteAboutProject noteAboutProject;
+
     private int gameStatus;
 
     public GameManager(){
+
+            noteAboutProject = new NoteAboutProject(this);
+
             mainMenu = new MainMenu(this);
             serverBrowser = new ServerBrowser(this);
             serverAdding = new ServerAdding(this);
-            gameStatus = 0; // 0 - MainMenu, 1 - NewGame running, 2 - game pause, 3 - multiplayer, 4 - ServerBrowser, 5 - AddingServer
+            //gameStatus = 0; // 0 - MainMenu, 1 - NewGame running, 2 - game pause, 3 - multiplayer, 4 - ServerBrowser, 5 - AddingServer, 6 - NOTE_ABOUT(INFO)
+            gameStatus = 6;
     }
 
     public Player getPlayer(){
@@ -128,6 +134,9 @@ public class GameManager extends AbstractGame {
             case 5 :
                 serverAdding.update(gameLoop);
                 break;
+            case 6 :
+                noteAboutProject.update(gameLoop);
+                break;
             default:
                 break;
         }
@@ -165,6 +174,9 @@ public class GameManager extends AbstractGame {
                 break;
             case 5 :
                 serverAdding.render(renderer);
+                break;
+            case 6 :
+                noteAboutProject.render(renderer);
                 break;
             default:
                 break;

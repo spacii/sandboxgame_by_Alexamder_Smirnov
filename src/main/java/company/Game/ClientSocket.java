@@ -48,10 +48,11 @@ public class ClientSocket implements Runnable {
 
 
 
-    //@Override
+    @Override
     public void run() {
         try{
             socket = new Socket();
+            System.out.println(ip + " " + port);
             socket.connect(new InetSocketAddress(ip, port), 2000);
             //socket = new Socket();
             //socket.connect(new InetSocketAddress("25.41.250.41",8189), 2000);
