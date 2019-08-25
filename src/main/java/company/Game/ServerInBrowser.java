@@ -5,22 +5,22 @@ import company.engine.Renderer;
 import company.engine.gfx.Image;
 
 import java.awt.event.MouseEvent;
+import java.util.Scanner;
 
 public class ServerInBrowser {
 
     private int x, y, port, sizeX = 272, sizeY = 50;
-    private String ip;
+    private String ip = "", serverName = "", players = "";
     private Image image = new Image("/ServerInBrowser.png");
-
-    //private ClientEcho clientEcho;
+    private Image serverIcon = new Image("/defaultServerIcon.jpg");
+    private Image selectedLine = new Image("/selectedServerLine.png");
+    private boolean online = false;
 
     ServerInBrowser(int x, int y, String ip, int port){
         this.x = x;
         this.y = y;
         this.port = port;
         this.ip = ip;
-
-        //clientEcho = new ClientEcho();
     }
 
     public void update(GameLoop gameLoop){
@@ -31,12 +31,39 @@ public class ServerInBrowser {
         }
     }
 
-    public void render(Renderer renderer, int count){
+    public void render(Renderer renderer, boolean isSelected){
         renderer.drawImage(image, x,y);
-        renderer.drawText(ip + ":" + port, x+10, y+10, 0xff00ffff);
+        renderer.drawImage(serverIcon, x+5, y+5);
+        if(isSelected){
+            renderer.drawImage(selectedLine, x-2, y+50);
+        }
 
-        String countStr = "PLAYERS: " + count + "/INF.";
-        renderer.drawText(countStr,x+10, y+20, 0xff00ffff );
+        renderer.drawText("STATUS:", x+60, y+20, 0xfffaf0be);
+        renderer.drawText("PLAYERS:", x+60, y+30, 0xfffaf0be);
+
+        if(online){
+            renderer.drawText("ONLINE", x+95, y+20, 0xff47cb35);
+            renderer.drawText(players + "/100", x+95, y+30, 0xff47cb35);
+            renderer.drawText(serverName.toUpperCase(), x+60, y+10, 0xff56a0d3);
+            renderer.drawText(ip + ":" + port, x+170, y+10, 0xffc95a49);
+        }
+        else{
+            renderer.drawText(ip + ":" + port, x+60, y+10, 0xffc95a49);
+            renderer.drawText("OFFLINE", x+95, y+20, 0xfff2003c);
+            renderer.drawText("0/0", x+95, y+30, 0xfff2003c);
+        }
+    }
+
+    public void updateInfo(ClientEchoNew clientEchoNew){
+        online = clientEchoNew.isServerAlive(ip, port);
+        if(online){
+            Scanner scanner = new Scanner(clientEchoNew.getServeInfo(ip,port));
+            scanner.useDelimiter("::");
+            while (scanner.hasNext()){
+                players = scanner.next();
+                serverName = scanner.next();
+            }
+        }
     }
 
     int getX2(){
@@ -61,5 +88,9 @@ public class ServerInBrowser {
 
     public String getIp() {
         return ip;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

@@ -86,6 +86,7 @@ public class ServerAdding {
                 && (gameLoop.getInput().getMouseY() >= 275 && gameLoop.getInput().getMouseY() <= 313)){
             if(gameLoop.getInput().isButton(MouseEvent.BUTTON1)){
                 addServer(ip, Integer.parseInt(port));
+                gameManager.getServerBrowser().refreshServers();
             }
         }
 

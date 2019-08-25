@@ -15,13 +15,15 @@ import java.util.Scanner;
 
 public class Main2 {
 
+    static private String serveName;
     static private ArrayList<ServerConnection> connectionsList = new ArrayList<>();
     static private GameWorld gameWorldServer;
 
     public static void main(String[] args) {
         try {
+            serveName = "SandBox's First Server";
             ServerSocket serverSocket = new ServerSocket(8189);
-            ServerEcho serverEcho = new ServerEcho(connectionsList);
+            ServerEcho serverEcho = new ServerEcho(connectionsList, serveName);
             System.out.println("Server started");
             gameWorldServer = new GameWorld();
             gameWorldServer.generateWorld();

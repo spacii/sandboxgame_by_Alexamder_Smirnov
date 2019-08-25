@@ -22,10 +22,12 @@ public class ServerEcho implements Runnable {
     private ObjectOutputStream objectOutputStream;
     private Scanner scanner;
     private ArrayList<ServerConnection> connections;
+    private String serverName;
 
-    public ServerEcho(ArrayList<ServerConnection> connections) {
+    public ServerEcho(ArrayList<ServerConnection> connections, String serverName) {
         try{
             this.connections = connections;
+            this.serverName = serverName;
             thread = new Thread(this);
             datagramSocket = new DatagramSocket(8189);
             byteArrayOutputStream = new ByteArrayOutputStream();
@@ -36,9 +38,26 @@ public class ServerEcho implements Runnable {
         }
     }
 
-    public void sendPlayersCount(int count){
+    public void sendServerStatus(){
         try{
-            String object = "playersCount::" + count + "::";
+            String object = "isAlive::";
+
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(object);
+            objectOutputStream.flush();
+
+            byte[] Buf = byteArrayOutputStream.toByteArray();
+            datagramPacket = new DatagramPacket(Buf, Buf.length, new InetSocketAddress("25.41.250.41",8188));
+            datagramSocket.send(datagramPacket); // Отправили объект.
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void sendServeInfo(){
+        try{
+            String object = "serverInfo::" + connections.size() + "::" + serverName + "::";
 
             byteArrayOutputStream = new ByteArrayOutputStream();
             objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
@@ -61,8 +80,6 @@ public class ServerEcho implements Runnable {
             //datagramPacket = new DatagramPacket(Buf, Buf.length, InetAddress.getByName("localhost"), 8188);
             datagramPacket = new DatagramPacket(Buf, Buf.length, new InetSocketAddress("25.41.250.41",8188));
             datagramSocket.send(datagramPacket); // Отправили объект.
-
-            System.out.println("transferred - " + count);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -98,8 +115,11 @@ public class ServerEcho implements Runnable {
                 while (scanner.hasNext()){
                     String command = scanner.next();
                     switch (command) {
-                        case "playersCount" :
-                            sendPlayersCount(connections.size());
+                        case "giveServeInfo" :
+                            sendServeInfo();
+                            break;
+                        case "aliveCheck" :
+                            sendServerStatus();
                             break;
                         default:
                             break;
