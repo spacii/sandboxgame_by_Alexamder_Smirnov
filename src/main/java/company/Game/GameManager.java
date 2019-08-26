@@ -50,7 +50,7 @@ public class GameManager extends AbstractGame {
         clientSocket = new ClientSocket(this, ip, port);
         clientSocket.getThread().start();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -61,7 +61,7 @@ public class GameManager extends AbstractGame {
         //escapeMenu = new EscapeMenu(this);
         clientSocket.getPrintWriter().println("giveMeWorld::");
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

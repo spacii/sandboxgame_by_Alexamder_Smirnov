@@ -25,47 +25,57 @@ public class Main2 {
 
 
     private static void readServerSettingsFromFile(){
-        //InputStream in = Main2.class.getResourceAsStream("/server_properties.txt");
-        File in = new File("C:\\Users\\Саша\\IdeaProjects\\sandboxgame\\src\\main\\resources\\server_properties.txt");
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(in);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        scanner.useDelimiter("=");
+        try{
+            InputStream inputStream = Main2.class.getResourceAsStream("/server_properties.txt");
+            Scanner scanner = new Scanner(inputStream);
+            scanner.useDelimiter("=");
 
-        while (scanner.hasNextLine()){
-            while(scanner.hasNext()){
-                String parameter = scanner.next();
-                switch(parameter){
-                    case "server-name" :
-                        serveName = scanner.next();
-                        break;
-                    case "server-ip" :
-                        serverIp = scanner.next();
-                        try {
-                            inetAddress = InetAddress.getByName(serverIp);
-                        } catch (UnknownHostException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "server-port" :
-                        serverPort = scanner.nextInt();
-                        break;
-                    case "max-players" :
-                        maxPlayers = scanner.nextInt();
-                        break;
-                    default :
-                        break;
+            while (scanner.hasNextLine()){
+                while(scanner.hasNext()){
+                    String parameter = scanner.next();
+                    switch(parameter){
+                        case "server-name" :
+                            serveName = scanner.next();
+                            break;
+                        case "server-ip" :
+                            serverIp = scanner.next();
+                            try {
+                                inetAddress = InetAddress.getByName(serverIp);
+                            } catch (UnknownHostException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "server-port" :
+                            serverPort = scanner.nextInt();
+                            break;
+                        case "max-players" :
+                            maxPlayers = scanner.nextInt();
+                            break;
+                        default :
+                            break;
+                    }
                 }
+                System.out.println("Settings loaded from server_properties.txt!");
+                break;
             }
-            break;
+        } catch (Exception e){
+            serverIp = "127.0.0.1";
+            serverPort = 8189;
+            serveName = "MY SERVER";
+            maxPlayers = 100;
+            try {
+                inetAddress = InetAddress.getByName(serverIp);
+            } catch (UnknownHostException e1) {
+                e1.printStackTrace();
+            }
+            System.out.println("Some error. Loaded default settings!");
         }
+
     }
 
     public static void main(String[] args) {
         try {
+
             readServerSettingsFromFile();
 
             //ServerSocket serverSocket = new ServerSocket(serverPort);

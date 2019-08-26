@@ -1,1 +1,1 @@
-server-name=SandBox's First Server=server-ip=25.41.250.41=server-port=8189=max-players=100=
+server-name=SandBox's First Server=server-ip=127.0.0.1=server-port=8189=max-players=100=

@@ -18,8 +18,8 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>company.Game.GameManager</mainClass>
-                            <!--<mainClass>server.Main2</mainClass> -->
+                            <!--<mainClass>company.Game.GameManager</mainClass>-->
+                            <mainClass>server.Main2</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
